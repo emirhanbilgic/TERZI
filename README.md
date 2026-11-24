@@ -56,6 +56,13 @@ Writes `garment.glb` / `garment.obj` (camera frame, metres), the conditioning `b
 - `fast`: only the holes below 10 cm. This is the post-processing of every number in the paper and of `evaluation/`.
 - `none`: the raw decoder output.
 
+**Rendering.** The garment is the raw output of the TRELLIS.2 shape decoder, without the remeshing of TRELLIS.2's own GLB
+export, and its triangle winding is not consistent: about 15-20% of the interior edges join two faces of opposite orientation.
+Face normals therefore point to either side of the surface at random, and averaged vertex normals cancel out. Render with
+**flat (per-face) normals and two-sided lighting** (shade with |n · l|, or enable double-sided materials and normals in your
+renderer). With smooth normals, or with one-sided lighting, the surface shows dark speckles and contour lines. The metrics are
+unaffected (normal consistency uses |cos|).
+
 **Inputs.**
 
 - **Image** and **person mask** (white = the person). `--auto-mask` computes the mask with BiRefNet
