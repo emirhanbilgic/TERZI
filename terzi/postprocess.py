@@ -4,7 +4,7 @@
           numbers (supplementary Sec. 9.6)
   patch   fast, then body-guided patches: from every body vertex, rays along the body normal are cast against the garment;
           body regions that the garment neither covers (outward hit within 25 cm) nor is pierced by (inward hit within 3 cm) and that
-          do not touch the head, neck, hands or feet are holes. Each hole smaller than 5% of the body surface is closed with a patch:
+          do not touch the head, neck, hands or feet are holes. Each hole smaller than 2% of the body surface is closed with a patch:
           the body faces of the hole and a ring around it, pushed outward to the cloth (offset interpolated harmonically from the
           surrounding covered vertices, at most 3 cm and at most half the free space in front of the body). Larger bare regions
           are kept (real skin). Needs an SMPL-X body (the joint each vertex belongs to).
@@ -143,7 +143,7 @@ def _signed(bv, bf, q):
     return -s if (s < 0).mean() > 0.5 else s
 
 
-def patch_holes(garment, body, joint_of_vertex, reach=0.25, inner=0.03, ring=2, max_off=0.03, max_area=0.05):
+def patch_holes(garment, body, joint_of_vertex, reach=0.25, inner=0.03, ring=2, max_off=0.03, max_area=0.02):
     """body-guided patches (see the module docstring). garment, body: trimesh meshes in the same frame (metres);
     joint_of_vertex: (10475,) SMPL-X joint index of each body vertex (argmax of the skinning weights)."""
     bv, bf = np.asarray(body.vertices, np.float64), np.asarray(body.faces, np.int64)

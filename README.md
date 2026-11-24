@@ -54,7 +54,7 @@ Writes `garment.glb` / `garment.obj` (camera frame, metres), the conditioning `b
 
 - `patch` (default): fills every hole with a perimeter below 10 cm, then closes larger holes with body-guided patches. Rays
   cast from the body along its normals find body regions the garment neither covers nor is pierced by; the enclosed ones
-  (not touching the head, neck, hands or feet) smaller than 5% of the body surface get a patch, the body surface pushed out
+  (not touching the head, neck, hands or feet) smaller than 2% of the body surface get a patch, the body surface pushed out
   to the surrounding cloth. Needs an SMPL-X body and `--smplx-model`.
 - `fast`: only the holes below 10 cm. This is the post-processing of every number in the paper and of `evaluation/`.
 - `none`: the raw decoder output.

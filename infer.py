@@ -64,7 +64,7 @@ def main():
     ap.add_argument("--slat", default=None, help="local SLat checkpoint instead of the Hugging Face weights")
     ap.add_argument("--seed", default="0")
     ap.add_argument("--holes", choices=["patch", "fast", "none"], default="patch",
-                    help="patch (default): fill holes below 10 cm, then close enclosed bare body regions (< 5%% of the body) with body-shaped "
+                    help="patch (default): fill holes below 10 cm, then close enclosed bare body regions (< 2%% of the body) with body-shaped "
                          "patches (needs --smplx-model); fast: only the holes below 10 cm (the setting of the paper's numbers)")
     ap.add_argument("--out", default="output")
     a = ap.parse_args()
