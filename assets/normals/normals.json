@@ -1,0 +1,56 @@
+{
+ "rich_ParkingLot2_009_impro2_cam_05_00300": {
+  "bench": "RICH",
+  "ang": {
+   "Ours": 15.7,
+   "HumanNOVA": 24.2,
+   "TRELLIS.2": 25.0,
+   "ChatGarment": 20.5
+  }
+ },
+ "rich_LectureHall_021_plankjack1_cam_05_00256": {
+  "bench": "RICH",
+  "ang": {
+   "Ours": 16.4,
+   "HumanNOVA": 24.8,
+   "TRELLIS.2": 24.0,
+   "ChatGarment": 33.0
+  }
+ },
+ "rich_Gym_013_lunge1_cam_06_00331": {
+  "bench": "RICH",
+  "ang": {
+   "Ours": 20.4,
+   "HumanNOVA": 27.8,
+   "TRELLIS.2": 46.2,
+   "ChatGarment": 33.1
+  }
+ },
+ "3dpw_flat_packBags_00_00750": {
+  "bench": "3DPW",
+  "ang": {
+   "Ours": 18.4,
+   "HumanNOVA": 29.0,
+   "TRELLIS.2": 32.0,
+   "ChatGarment": 39.6
+  }
+ },
+ "rich_LectureHall_010_sidebalancerun1_cam_02_00455": {
+  "bench": "RICH",
+  "ang": {
+   "Ours": 20.4,
+   "HumanNOVA": 25.6,
+   "TRELLIS.2": 60.9,
+   "ChatGarment": 33.9
+  }
+ },
+ "rich_Gym_011_dips4_cam_04_00230": {
+  "bench": "RICH",
+  "ang": {
+   "Ours": 16.3,
+   "HumanNOVA": 21.7,
+   "TRELLIS.2": 25.8,
+   "ChatGarment": 26.3
+  }
+ }
+}

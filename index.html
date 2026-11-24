@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TERZI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* v3b (2026-11-21): wall teaser, name (one line), Fig. 1, the overview video, the method figures, 4D-DRESS before/after sliders, the
+   in-the-wild gallery (8 clips), the comparison videos, the normals grid, the paper's tables by benchmark. ASCII only: every special character is an HTML entity, so the page
+   reads correctly whatever encoding it is served with. A dark studio page like the renders. */
+:root {
+  --bg: #0e1013; --surface: #161a1f; --surface-2: #1d2229; --line: #2a3039;
+  --ink: #e8ebf0; --ink-dim: #9aa3b0; --ink-faint: #6b7380;
+  --accent: #78b4ff; --tape: #c8a96a; --card-fig: #ffffff;
+  --display: "Newsreader", "Times New Roman", Times, serif;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --col: 68ch; --wide: 1080px;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1013; --surface: #161a1f; --surface-2: #1d2229; --line: #2a3039;
+  --ink: #e8ebf0; --ink-dim: #9aa3b0; --ink-faint: #6b7380;
+  --accent: #78b4ff; --tape: #c8a96a; --card-fig: #ffffff; color-scheme: dark }
+
+* { box-sizing: border-box }
+[hidden] { display: none !important }   /* a hidden tab panel stays hidden whatever its inline display */
+html { background: var(--bg) }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased }
+a { color: var(--accent); text-underline-offset: 3px }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px }
+video, img { display: block; max-width: 100% }
+
+/* hero: the wall teaser */
+.hero { position: relative; background: #000; overflow: hidden; height: 100vh; height: 100svh }   /* the wall alone fills the first screen */
+.hero video { width: 100%; height: 100%; object-fit: contain }
+.hero-ui { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; align-items: end;
+  padding-block: 18px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px));
+  background: linear-gradient(transparent, rgba(0,0,0,.55)) }
+.hero-ui a, .hero-ui button { font: 500 14px/1 var(--body); color: #fff; background: rgba(12,14,18,.55); border: 1px solid rgba(255,255,255,.28);
+  padding: 10px 14px; border-radius: 999px; text-decoration: none; cursor: pointer; backdrop-filter: blur(4px) }
+
+/* reading column */
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.wide { max-width: var(--wide); margin-inline: auto }
+section.block { padding-block: 64px 8px; display: grid; gap: 20px }
+h2 { font: 500 clamp(30px, 4vw, 42px)/1.1 var(--display); letter-spacing: -.01em; margin: 0; text-wrap: balance }
+h3 { font: 600 19px/1.3 var(--body); margin: 0 }
+p { margin: 0 }
+.lede { color: var(--ink-dim); font-size: 18px; max-width: none }
+.head { display: grid; gap: 10px }
+
+/* masthead */
+.mast { padding-block: 56px 8px; display: grid; gap: 18px; text-align: center; justify-items: center }
+.mast h1 { margin: 0; font: 500 clamp(64px, 12vw, 132px)/.9 var(--display); letter-spacing: .04em }
+.mast .full { font: 400 clamp(17px, 1.9vw, 26px)/1.35 var(--display); color: var(--ink); max-width: 100%; text-wrap: balance }   /* one line; wraps only on narrow screens */
+.mast .full u { text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: var(--accent) }
+.mast .authors { font: 400 clamp(18px, 2vw, 25px)/1.3 var(--display); color: var(--ink) }
+.mast .affil { font: italic 400 clamp(15px, 1.6vw, 20px)/1.3 var(--display); color: var(--ink-dim); margin-top: -10px }
+/* the masthead travels from the wall teaser to its place (script at the end); --sh = its shadow while over the video */
+.mast { position: relative; z-index: 3; transform-origin: center top }
+.mast.in-hero { pointer-events: none; will-change: transform;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,var(--sh,1))) drop-shadow(0 4px 18px rgba(0,0,0,var(--sh,1))) }
+.mast.in-hero .affil { color: #c9ced6 }
+.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: var(--shade, 1);
+  background: radial-gradient(ellipse 67% 35% at 50% var(--shade-y, 68%), rgba(0,0,0,.75), transparent 82%) }
+.hero-ui { z-index: 1 }
+/* phones, narrow screens: the 4D-DRESS sliders two per row (ids: these rules come before the .bagrid ones) */
+@media (max-width: 600px) { #fourdba .bagrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px }
+  #fourdba .ba .knob { width: 28px; height: 28px; margin: -14px 0 0 -14px; font-size: 11px } }
+
+/* paper figures on white cards */
+figure { margin: 0; display: grid; gap: 10px }
+.fig { background: var(--card-fig); border-radius: 10px; padding: 14px }
+.fig img { width: 100%; height: auto }
+figcaption { color: var(--ink-dim); font-size: 15px; max-width: var(--col) }
+figcaption b { color: var(--ink); font-weight: 600 }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start }
+.pair.narrow { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) }
+@media (max-width: 820px) { .pair, .pair.narrow { grid-template-columns: minmax(0, 1fr) } }
+
+/* tabs */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line) }
+.tabs button { font: 500 15px/1.2 var(--body); color: var(--ink-dim); background: none; border: 0; border-bottom: 2px solid transparent;
+  padding: 10px 12px 12px; cursor: pointer; margin-bottom: -1px }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent) }
+.tabs button:hover { color: var(--ink) }
+.panel { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 28px; align-items: start; padding-top: 22px }
+.panel .media { border-radius: 10px; overflow: hidden; background: #000 }
+.panel .media video { width: 100%; aspect-ratio: 16 / 9 }
+.panel .text { display: grid; gap: 12px; min-width: 0 }
+.panel .text p { color: var(--ink-dim) }
+.stat { font: 500 15px/1.6 var(--mono); color: var(--ink) }
+.stat b { color: var(--accent); font-weight: 500 }
+@media (max-width: 820px) { .panel { grid-template-columns: minmax(0, 1fr) } }
+
+/* gallery */
+.gallery { display: grid; gap: 12px }
+.gallery .stage { background: #000; border-radius: 10px; overflow: hidden; display: grid; place-items: center }
+.gallery .stage video { max-height: 62vh; width: auto; max-width: 100% }
+.thumbs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px }
+.thumbs button { flex: 0 0 auto; padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; background: none; cursor: pointer; opacity: .6 }
+.thumbs button[aria-pressed="true"] { border-color: var(--accent); opacity: 1 }
+.thumbs img { height: 64px; width: auto }
+.cap { color: var(--ink-faint); font-size: 14px }
+
+/* table */
+.tbl { overflow-x: auto }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 15px; min-width: 640px }
+th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap }
+th:first-child, td:first-child { text-align: left }
+thead th { font: 600 13px/1.2 var(--body); color: var(--ink-dim) }
+thead tr.grp th { color: var(--ink); text-align: center; border-bottom: 1px solid var(--ink-faint) }
+td { font-family: var(--mono); font-size: 14px }
+td:first-child { font-family: var(--body); font-size: 15px }
+tr.ours td { color: var(--accent) }
+tr.sep td { border-top: 1px solid var(--ink-faint) }
+td.best { font-weight: 600 }
+td.second { text-decoration: underline; text-underline-offset: 3px }
+.dim { color: var(--ink-faint) }
+
+.full video { width: 100%; border-radius: 10px; background: #000 }
+.yt { aspect-ratio: 16 / 9; max-width: 100%; border-radius: 10px; overflow: hidden; background: #000 }
+.yt iframe { display: block; width: 100%; height: 100%; border: 0 }
+
+/* chips */
+.chips { display: flex; flex-wrap: wrap; gap: 8px }
+.chips button { font: 500 14px/1 var(--body); padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink-dim); cursor: pointer }
+.chips button[aria-pressed="true"] { color: var(--ink); border-color: var(--accent); background: var(--surface-2) }
+
+/* 4D-DRESS before / after: drag left = the photo, drag right = our garments */
+.bagrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px }
+.ba { position: relative; border-radius: 10px; overflow: hidden; background: #000; touch-action: pan-y; cursor: ew-resize; user-select: none; aspect-ratio: 1 / 1 }
+.ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none }
+.ba .top { clip-path: inset(0 0 0 var(--x, 50%)) }
+.ba .bar { position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 2px; margin-left: -1px; background: #fff; pointer-events: none }
+.ba .knob { position: absolute; top: 50%; left: var(--x, 50%); width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; background: #fff;
+  color: #111; display: grid; place-items: center; font: 600 13px/1 var(--mono); box-shadow: 0 2px 10px rgba(0,0,0,.4); pointer-events: none }
+
+/* normals grid (as the previous version) */
+.ngrid { display: grid; grid-template-columns: 110px repeat(5, minmax(0, 1fr)); gap: 10px 12px; align-items: end }
+.ngrid .h { font: 600 14px/1.2 var(--body); text-align: center; align-self: end }
+.ngrid .h.ours { color: var(--accent) }
+.ngrid .im { display: grid; place-items: center; min-height: 0 }
+.ngrid .im img { max-height: 260px; width: auto; max-width: 100% }
+.ngrid .num { text-align: center; font: 400 13px/1.3 var(--mono); color: var(--ink-dim) }
+.ngrid .num.ours { color: var(--accent); font-weight: 500 }
+.ngrid .inp img { border-radius: 6px; max-height: 260px }
+@media (max-width: 820px) { .ngrid { grid-template-columns: 64px repeat(5, minmax(0, 1fr)); gap: 6px } .ngrid .im img { max-height: 150px } .ngrid .h { font-size: 12px } }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; color: var(--ink-dim); font-size: 14px }
+.jetbar { width: 180px; height: 10px; border-radius: 3px; background: linear-gradient(90deg,#00007f,#0000ff,#007fff,#00ffff,#7fff7f,#ffff00,#ff7f00,#ff0000,#7f0000) }/* method: figures beside / in a row with their captions on wide screens, one column only when narrow (user 2026-11-22: "too vertical") */
+#method figure { margin: 0; display: grid; gap: 10px; align-content: start; min-width: 0 }
+#method figcaption { max-width: none; font-size: 14.5px; line-height: 1.5 }
+#method .mrow { grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); gap: 24px; align-items: center }
+#method .mpair { display: grid; grid-template-columns: minmax(0, 951fr) minmax(0, 2000fr); gap: 24px; align-items: start }
+#method .mpair .fig { aspect-ratio: auto }
+#method .mpair figure:first-child .fig img { width: auto; max-width: 100%; height: clamp(180px, 22vw, 290px); margin-inline: auto }
+#method .mpair figure:first-child { grid-template-columns: auto }
+#method .mpair figure:last-child .fig { height: calc(clamp(180px, 22vw, 290px) + 28px); display: grid; place-items: center }
+#method .mpair figure:last-child .fig img { max-height: 100%; width: auto; max-width: 100% }
+@media (min-width: 901px) { #method .mpair { grid-template-columns: minmax(300px, 0.9fr) minmax(0, 2.1fr) } }
+@media (max-width: 900px) {
+  #method .mrow, #method .mpair { grid-template-columns: minmax(0, 1fr) }
+  #method .mpair figure:first-child .fig img { height: auto; width: 100%; max-width: 420px }
+  #method .mpair figure:last-child .fig { height: auto } }
+
+footer { padding-block: 72px 48px; color: var(--ink-faint); font-size: 14px; text-align: center }
+</style>
+</head>
+<body>
+
+<!-- hero: the wall teaser (aligned model; masked model for the trampoline and mural clips) -->
+<section class="hero" aria-label="TERZI on in-the-wild videos">
+  <video id="wall" src="assets/v3/wall.mp4" poster="assets/v3/wall.jpg" muted loop playsinline autoplay preload="auto"></video>
+  <div class="hero-ui">
+    <a href="#paper">Explore the paper &darr;</a>
+    <button type="button" id="wallPause" aria-pressed="false">Pause</button>
+  </div>
+</section>
+
+<main id="paper" class="wrap">
+  <header class="mast">
+    <h1>TERZI</h1>
+    <p class="full"><u>T</u>hree-dimensional Garment G<u>e</u>neration and <u>R</u>etargeting via Optimi<u>z</u>ation-free <u>I</u>nference</p>
+    <p class="authors">Emirhan Bilgi&ccedil;, R&#305;za Alp G&uuml;ler</p>
+    <p class="affil">Imperial College London</p>
+  </header>
+
+  <section class="block wide" aria-label="Overview figure">
+    <figure><div class="fig"><img src="assets/v3/fig/fig1.jpg" width="2000" height="603" alt="Paper Figure 1: image-aligned garments, separate layers, new poses and a new body from one photo"></div>
+</figure>
+  </section>
+
+  <!-- narrated video -->
+  <section class="block wide" id="video" aria-labelledby="v-title">
+    <div class="head"><h2 id="v-title">Overview Video</h2></div>
+    <div class="full yt"><iframe src="https://www.youtube-nocookie.com/embed/gR8U2ctg5wg?rel=0" title="TERZI overview video" loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+  </section>
+
+  <!-- 4D-DRESS: drag between the photo and our garments -->
+  <section class="block wide" id="fourdba" aria-labelledby="ba-title" hidden>
+    <div class="head"><h2 id="ba-title">4D-DRESS</h2>
+      <p class="lede">Drag across each image: to the left, the photo; to the right, our garments rendered through the photo's camera.</p></div>
+    <div class="chips" role="group" aria-label="Garment rendering">
+      <button type="button" data-look="color" aria-pressed="true">Mean color</button>
+      <button type="button" data-look="normals" aria-pressed="false">Normals</button>
+    </div>
+    <div class="bagrid" id="bagrid"></div>
+  </section>
+
+  <!-- in the wild -->
+  <section class="block wide" id="wild" aria-labelledby="w-title">
+    <div class="head"><h2 id="w-title">Real videos, frame by frame</h2>
+      <p class="lede">Each clip: the input frame, then our garments on the body, seen from the camera.</p></div>
+    <div class="gallery">
+      <div class="stage"><video id="gal" muted loop playsinline autoplay preload="metadata"></video></div>
+      <div class="thumbs" id="thumbs" role="group" aria-label="Choose a video"></div>
+      <p class="cap">Videos from Pexels.</p>
+    </div>
+  </section>
+
+  <!-- retargeting (user 2026-11-22: "We didn't show any retargeting examples"): the marketing video's shots, title bars cropped -->
+  <section class="block wide" id="retarget" aria-labelledby="r-title">
+    <div class="head"><h2 id="r-title">Retargeting</h2>
+      <p class="lede">Keeping the image and masks fixed, the same garments are generated directly on the body in new poses, and on target bodies
+        with a different shape and pose, without explicit training for cross-body transfer.</p></div>
+    <div data-tabs>
+      <div class="tabs" role="tablist" aria-label="Retargeting examples">
+        <button role="tab" aria-selected="true" aria-controls="rt1" id="rt1b">New poses</button>
+        <button role="tab" aria-selected="false" aria-controls="rt2" id="rt2b">New bodies and poses</button>
+      </div>
+      <div role="tabpanel" id="rt1" aria-labelledby="rt1b" class="full" style="padding-top:18px">
+        <video data-src="assets/v3/retarget/poses.mp4" poster="assets/v3/retarget/poses.jpg" muted loop playsinline controls></video>
+        <p class="cap" style="margin-top:10px">One photo and its garment masks; the garments generated on the same person's body in other poses.</p></div>
+      <div role="tabpanel" id="rt2" aria-labelledby="rt2b" class="full" style="padding-top:18px" hidden>
+        <video data-src="assets/v3/retarget/bodies.mp4" poster="assets/v3/retarget/bodies.jpg" muted loop playsinline controls></video>
+        <p class="cap" style="margin-top:10px">Masked model. One photo of a size-L outfit; the same outfit generated on other people in other poses, from size M to 6XL.</p></div>
+    </div>
+  </section>
+
+  <!-- comparisons -->
+  <section class="block wide" id="compare" aria-labelledby="c-title">
+    <div class="head"><h2 id="c-title">Against the baselines</h2></div>
+    <div data-tabs>
+      <div class="tabs" role="tablist" aria-label="Comparison videos">
+        <button role="tab" aria-selected="true" aria-controls="cv1" id="cv1b">Images, 4D-DRESS</button>
+        <button role="tab" aria-selected="false" aria-controls="cv2" id="cv2b">Video, frame by frame</button>
+      </div>
+      <div role="tabpanel" id="cv1" aria-labelledby="cv1b" style="padding-top:18px; display:grid; gap:12px">
+        <div class="chips" role="group" aria-label="Choose a 4D-DRESS frame" id="cmpchips"></div>
+        <div class="full"><video id="cmpv" muted loop playsinline controls></video></div>
+        <p class="cap">Garments colored by distance to the scan's garments (0&ndash;5 cm); numbers: each method's per-frame chamfer distance from
+          the paper's evaluation (segmentation protocol). Ours: the masked model.</p>
+      </div>
+      <div role="tabpanel" id="cv2" aria-labelledby="cv2b" class="full" style="padding-top:18px" hidden>
+        <video data-src="assets/v3/clips/vidcmp.mp4" poster="assets/v3/clips/vidcmp.jpg" muted loop playsinline controls></video>
+        <p class="cap" style="margin-top:10px">HumanNOVA and TRELLIS.2 return one surface that fuses body and clothes; TERZI returns the
+          garments as separate meshes on the body. No temporal smoothing for any method.</p></div>
+    </div>
+  </section>
+
+  <!-- normals (as the previous version) -->
+  <section class="block wide" id="normals" aria-labelledby="n-title">
+    <div class="head"><h2 id="n-title">Garment normals on real photos</h2>
+      <p class="lede">No 3D ground truth exists here, so each method is rendered in its own image space and compared with Sapiens2
+        pseudo-ground-truth normals on the clothing it covers. Numbers: mean angle to the pseudo ground truth.</p></div>
+    <div class="chips" role="group" aria-label="Choose an example" id="nchips"></div>
+    <div class="ngrid" id="ngrid"></div>
+    <div class="legend"><span>0&deg;</span><span class="jetbar" aria-hidden="true"></span><span>60&deg;</span><span>angle to the pseudo-ground-truth normals; grey = not scored</span></div>
+  </section>
+
+  <!-- method: the paper's figures -->
+  <section class="block wide" id="method" aria-labelledby="m-title">
+    <div class="head"><h2 id="m-title">Method</h2></div>
+    <figure class="mrow"><div class="fig"><img src="assets/v3/fig/fig2.jpg" width="2000" height="1092" loading="lazy" alt="Paper Figure 2: overview of TERZI"></div>
+      <figcaption><b>Overview of TERZI.</b> The image <i>I</i>, the body <i>B</i> estimated by an HMR method and, for the masked model, a garment
+        mask <i>M</i> are encoded by a frozen DINOv3 into tokens that serve as cross-attention context in every block of two flow-matching DiTs,
+        which generate the garment <i>G</i> around <i>B</i>. Stage 1 generates the structure latent <i>z</i><sub>ss</sub>, which the frozen structure
+        decoder turns into the active cells the garment occupies. Stage 2 generates the structured latent <i>z</i><sub>slat</sub> on these cells,
+        which the frozen shape decoder turns into the garment mesh. Body and garment are separate meshes by construction, and no penetration fix
+        is needed during inference.</figcaption></figure>
+    <div class="mpair">
+      <figure><div class="fig"><img src="assets/v3/fig/fig3.jpg" width="951" height="1167" loading="lazy" alt="Paper Figure 3: data mix"></div>
+        <figcaption><b>Data mix.</b> Each training example takes its target garment and body renders from a frame <i>t</i> of a BEDLAM2.0
+          sequence. The image comes either from the same frame (aligned) or from another frame <i>t</i>&prime; of the same sequence (non-aligned).
+          This makes the model take only the garment from the image, not the pose, so the garment can be transferred to different poses.</figcaption></figure>
+      <figure><div class="fig"><img src="assets/v3/fig/fig4.jpg" width="2000" height="701" loading="lazy" alt="Paper Figure 4: penetration fine-tuning"></div>
+        <figcaption><b>Penetration fine-tuning.</b> Left: a garment <i>z</i> sampled from the model is noised to <i>x</i><sub>&tau;</sub> and passed
+          to the trained DiT (&theta;) and a frozen copy (&theta;<sub>0</sub>). The anchor loss <i>L</i><sub>anchor</sub> = &#8214;<i>v</i> &minus;
+          <i>v</i><sub>0</sub>&#8214;<sup>2</sup> keeps the trained prediction close to the pre-trained one. The trained velocity <i>v</i> also gives a
+          one-step estimate <i>x&#770;</i><sub>0</sub>, which the frozen decoder turns into a garment on the body; <i>L</i><sub>pen</sub> penalizes
+          the body poking through it. The DiT is updated with <i>L</i> = <i>L</i><sub>anchor</sub> + &lambda;<i>L</i><sub>pen</sub>. Right: the
+          sample before and after fine-tuning (red: body poking through the garment).</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- results: the paper's tables, one benchmark at a time -->
+  <section class="block wide" id="results" aria-labelledby="t-title">
+    <div class="head"><h2 id="t-title">Results</h2></div>
+    <div class="chips" role="group" aria-label="Benchmark" id="bchips"></div>
+    <p class="lede" id="tlede"></p>
+    <div class="tbl"><table id="tab">
+      <thead><tr class="grp"><th></th><th colspan="3">Segmentation</th><th colspan="3">GT label transfer</th></tr>
+        <tr><th>Method</th><th>CD &darr;</th><th>NC &uarr;</th><th>F@1 &uarr;</th><th>CD &darr;</th><th>NC &uarr;</th><th>F@1 &uarr;</th></tr></thead><tbody></tbody></table></div>
+    <p class="cap" id="tcap"></p>
+  </section>
+</main>
+<footer class="wrap">TERZI &middot; Narration: Kokoro-82M text to speech. Music: Vivaldi, Spring, I. Allegro, Modena Chamber Orchestra (Musopen, public domain).</footer>
+
+<script>
+// hero pause
+(() => { const v = document.getElementById('wall'), b = document.getElementById('wallPause');
+  b.addEventListener('click', () => { if (v.paused) { v.play(); b.textContent = 'Pause'; b.setAttribute('aria-pressed', 'false') }
+    else { v.pause(); b.textContent = 'Play'; b.setAttribute('aria-pressed', 'true') } });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); b.textContent = 'Play' } })();
+
+// tabs: a panel's video loads and plays only while the panel is shown
+document.querySelectorAll('[data-tabs]').forEach(g => {
+  const tabs = [...g.querySelectorAll('[role=tab]')], show = t => {
+    tabs.forEach(x => { const on = x === t, p = document.getElementById(x.getAttribute('aria-controls'));
+      x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; p.hidden = !on;
+      p.querySelectorAll('video').forEach(v => { if (on) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}) } else v.pause() }) }) };
+  tabs.forEach((t, i) => { t.addEventListener('click', () => show(t));
+    t.addEventListener('keydown', e => { const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); show(n) } }) });
+  show(tabs[0]);
+});
+
+// gallery: the 8 clips the user kept (2026-11-21); aligned model, masked for 6572686 and 8929391 (as the wall)
+(() => { const ids = ['11972153', '2795748', '14838540', '20559017', '8929391', '6572686', '8052611', '4990394'];   // first three: the user's picks
+  const v = document.getElementById('gal'), t = document.getElementById('thumbs');
+  const pick = id => { v.src = `assets/v3/wild/${id}.mp4`; v.poster = `assets/v3/wild/${id}.jpg`; v.play().catch(() => {});
+    t.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === id)) };
+  ids.forEach(id => { const b = document.createElement('button'); b.type = 'button'; b.dataset.id = id; b.setAttribute('aria-label', 'Pexels video ' + id);
+    b.innerHTML = `<img src="assets/v3/wild/${id}.jpg" alt="" loading="lazy">`; b.onclick = () => pick(id); t.appendChild(b) });
+  pick(ids[0]); })();
+
+// results: the paper's tables (4D-DRESS = Tab. 2; CloSe = supp. Tab. 13; BEDLAM2.0 validation = supp. Tab. 14, as pasted by the user 2026-11-21)
+(() => { const D = String.fromCharCode(8224), B = {
+  '4D-DRESS': { lede: '64 frames; ours on the GVHMR body. Segmentation: garments evaluated after segmenting each prediction. GT label transfer: garment labels transferred from the ground-truth scan. Chamfer distance (CD) in cm.',
+    cap: '* after segmentation &middot; &dagger; closed source, numbers from the paper &middot; bold = best, underlined = second best',
+    rows: [['ReMu', [3.306, .732, .260, 2.848, .744, .273]], ['TRELLIS.2*', [1.879, .772, .413, 1.846, .771, .418]],
+      ['HumanNOVA*', [2.024, .805, .382, 1.958, .803, .389]], ['SiTH*', [2.755, .768, .263, 2.599, .768, .273]], ['ISP', [2.882, .783, .282, 2.695, .770, .296]],
+      ['ChatGarment', [2.707, .786, .284, 2.452, .788, .307]], ['DeClotH' + D, [3.902, null, null, null, null, null]], ['Dress-1-to-3' + D, [2.441, null, null, null, null, null]],
+      ['TERZI (ours)', [1.484, .813, .481, 1.477, .816, .485]], ['TERZI (ours, masked)', [1.528, .811, .465, 1.503, .815, .476]]] },
+  'CloSe': { lede: '146 frontal frames; ours on the PromptHMR body. Protocols as for 4D-DRESS. Chamfer distance (CD) in cm.',
+    cap: '* after segmentation &middot; &dagger; failed on some frames and averaged over the rest: ReMu on 3 frames (143 evaluated), ISP on 1 (145 evaluated) &middot; bold = best, underlined = second best',
+    rows: [['ReMu' + D, [1.717, .831, .406, 1.554, .837, .425]], ['TRELLIS.2*', [1.270, .818, .526, 1.223, .819, .535]],
+      ['HumanNOVA*', [1.303, .837, .534, 1.220, .839, .541]], ['SiTH*', [1.618, .834, .402, 1.567, .835, .410]], ['ISP' + D, [1.908, .832, .375, 1.721, .826, .390]],
+      ['ChatGarment', [2.170, .811, .336, 1.855, .817, .367]],
+      ['TERZI (ours)', [1.202, .837, .534, 1.148, .843, .553]], ['TERZI (ours, masked)', [1.228, .834, .523, 1.167, .840, .544]]] },
+  'BEDLAM2.0 validation': { lede: '200 frames of the validation split; ours on the PromptHMR body. Protocols as for 4D-DRESS. Chamfer distance (CD) in cm.',
+    cap: '* after segmentation &middot; &dagger; failed on some frames and averaged over the rest: ReMu on 4 frames (196 evaluated), ChatGarment on 1 (199 evaluated) &middot; bold = best, underlined = second best',
+    rows: [['ReMu' + D, [2.781, .772, .310, 2.297, .783, .342]], ['TRELLIS.2*', [2.110, .807, .375, 1.993, .802, .390]],
+      ['HumanNOVA*', [2.514, .794, .320, 2.333, .785, .336]], ['SiTH*', [2.778, .791, .260, 2.498, .790, .284]], ['ISP', [2.841, .813, .286, 2.485, .806, .317]],
+      ['ChatGarment' + D, [3.030, .812, .298, 2.172, .819, .345]],
+      ['TERZI (ours)', [1.096, .860, .603, 1.089, .862, .615]], ['TERZI (ours, masked)', [1.114, .857, .596, 1.103, .859, .611]]] } };
+  const c = document.getElementById('bchips'), fmt = (v, q) => v === null ? '<span class="dim">&ndash;</span>' : q % 3 ? v.toFixed(3).slice(1) : v.toFixed(3);
+  const show = k => { const T = B[k].rows, first = T.findIndex(r => r[0].startsWith('TERZI'));
+    const rank = [0, 1, 2, 3, 4, 5].map(q => { const v = T.map((r, i) => [r[1][q], i]).filter(x => x[0] !== null).sort((a, b) => q % 3 ? b[0] - a[0] : a[0] - b[0]);
+      const out = {}, best = v[0][0]; v.forEach(([x, i]) => { if (x === best) out[i] = 'best' });
+      const sec = v.find(([x]) => x !== best); if (sec) v.forEach(([x, i]) => { if (x === sec[0]) out[i] = 'second' }); return out });
+    document.querySelector('#tab tbody').innerHTML = T.map((r, i) => `<tr class="${r[0].startsWith('TERZI') ? 'ours' : ''} ${i === first ? 'sep' : ''}"><td>${r[0]}</td>${r[1].map((v, q) => `<td class="${rank[q][i] || ''}">${fmt(v, q)}</td>`).join('')}</tr>`).join('');
+    document.getElementById('tlede').textContent = B[k].lede; document.getElementById('tcap').innerHTML = B[k].cap;
+    c.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k)) };
+  Object.keys(B).filter(k => B[k]).forEach(k => { const b = document.createElement('button'); b.type = 'button'; b.dataset.k = k; b.textContent = k; b.onclick = () => show(k); c.appendChild(b) });
+  show('4D-DRESS'); })();
+
+// normals (the previous version's grid)
+(() => { const DEG = String.fromCharCode(176), EX = [
+    ['rich_ParkingLot2_009_impro2_cam_05_00300', 'RICH, parking lot'], ['rich_LectureHall_021_plankjack1_cam_05_00256', 'RICH, plank'],
+    ['rich_Gym_013_lunge1_cam_06_00331', 'RICH, lunge'], ['3dpw_flat_packBags_00_00750', '3DPW, packing'],
+    ['rich_LectureHall_010_sidebalancerun1_cam_02_00455', 'RICH, side plank'], ['rich_Gym_011_dips4_cam_04_00230', 'RICH, dips']];
+  const ANG = { 'rich_ParkingLot2_009_impro2_cam_05_00300': [15.7, 24.2, 25.0, 20.5], 'rich_LectureHall_021_plankjack1_cam_05_00256': [16.4, 24.8, 24.0, 33.0],
+    'rich_Gym_013_lunge1_cam_06_00331': [20.4, 27.8, 46.2, 33.1], '3dpw_flat_packBags_00_00750': [18.4, 29.0, 32.0, 39.6],
+    'rich_LectureHall_010_sidebalancerun1_cam_02_00455': [20.4, 25.6, 60.9, 33.9], 'rich_Gym_011_dips4_cam_04_00230': [16.3, 21.7, 25.8, 26.3] };
+  const COLS = [['gt', 'Pseudo GT', null], ['ours_own', 'TERZI', 0], ['nova_own', 'HumanNOVA', 1], ['t2v_own', 'TRELLIS.2', 2], ['cg_own', 'ChatGarment', 3]];
+  const g = document.getElementById('ngrid'), c = document.getElementById('nchips');
+  const show = sid => { const d = `assets/normals/${sid}/`;
+    let h = `<div class="inp" style="grid-row:span 2;align-self:center"><img src="${d}input.jpg" alt="Input photo"></div>`;
+    h += COLS.map(([k, n]) => `<div class="im"><img src="${d}${k}.webp" alt="${n} normals"></div>`).join('');
+    h += COLS.map(([k, n]) => `<div class="im"><img src="${d}${k}_err.webp" alt="${n} error map"></div>`).join('');
+    h += '<div></div>' + COLS.map(([k, n, i]) => `<div><div class="h ${i === 0 ? 'ours' : ''}">${n}</div><div class="num ${i === 0 ? 'ours' : ''}">${i === null ? 'reference' : ANG[sid][i].toFixed(1) + DEG}</div></div>`).join('');
+    g.innerHTML = h; c.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.sid === sid)) };
+  EX.forEach(([sid, lab]) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.sid = sid; b.textContent = lab; b.onclick = () => show(sid); c.appendChild(b) });
+  show(EX[0][0]); })();
+
+// 4D-DRESS before / after (the user's picks): left of the handle = photo, right = our garments
+(() => { const EX4 = ['00169_Outer_Take12_f00118_v0004', '00151_Outer_Take10_f00123_v0004', '00140_Inner_Take1_f00177_v0004', '00148_Outer_Take12_f00069_v0004', '00151_Inner_Take2_f00170_v0004', '00156_Inner_Take1_f00075_v0004', '00160_Inner_Take2_f00138_v0004', '00185_Outer_Take17_f00130_v0004'];   // the user's 8 picks (2026-11-22: 8, 35 (was 12), 28, 31, 34, 39, 41, 56 of the 60)
+  const sec = document.getElementById('fourdba'), grid = document.getElementById('bagrid'); if (!EX4.length) return; sec.hidden = false;
+  let look = 'color';
+  EX4.forEach(sid => { const d = `assets/v3/4dd/${sid}/`, el = document.createElement('div'); el.className = 'ba'; el.setAttribute('role', 'slider');
+    el.tabIndex = 0; el.setAttribute('aria-label', '4D-DRESS ' + sid + ': photo versus our garments'); el.setAttribute('aria-valuemin', 0); el.setAttribute('aria-valuemax', 100);
+    el.innerHTML = `<img src="${d}photo.jpg" alt="" loading="lazy"><img class="top" data-d="${d}" src="${d}color.jpg" alt="" loading="lazy"><div class="bar"></div><div class="knob" aria-hidden="true">&harr;</div>`;
+    const set = x => { x = Math.max(0, Math.min(100, x)); el.style.setProperty('--x', x + '%'); el.setAttribute('aria-valuenow', Math.round(x)) };
+    let drag = false; const at = e => { const r = el.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100) };
+    el.addEventListener('pointerdown', e => { drag = true; el.setPointerCapture(e.pointerId); at(e) });
+    el.addEventListener('pointermove', e => { if (drag) at(e) }); el.addEventListener('pointerup', () => drag = false);
+    el.addEventListener('keydown', e => { const v = +el.getAttribute('aria-valuenow'); if (e.key === 'ArrowLeft') set(v - 5); if (e.key === 'ArrowRight') set(v + 5) });
+    set(50); const w = document.createElement('figure'); w.style.margin = '0'; w.appendChild(el);
+    const c = document.createElement('figcaption'); c.className = 'cap'; c.textContent = (EX4.indexOf(sid) + 1) + '. ' + sid.split('_').slice(0, 3).join(' ');
+    w.appendChild(c); grid.appendChild(w) });
+  sec.querySelectorAll('[data-look]').forEach(b => b.addEventListener('click', () => { look = b.dataset.look;
+    sec.querySelectorAll('[data-look]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    grid.querySelectorAll('img.top').forEach(i => i.src = i.dataset.d + look + '.jpg') })); })();
+
+// "Images, 4D-DRESS": the user's 8 comparison videos (2026-11-22: 1, 2, 3, 4, 12, 23, 29, 50 of the 64), chosen by button
+(() => { const ids = ['00185_Inner_Take5_f00082_v0004', '00179_Inner_Take2_f00075_v0004', '00170_Inner_Take9_f00159_v0004', '00123_Inner_Take1_f00068_v0004', '00127_Inner_Take2_f00183_v0004', '00140_Inner_Take1_f00177_v0004', '00149_Outer_Take14_f00093_v0004', '00175_Inner_Take6_f00141_v0004'], v = document.getElementById('cmpv'), c = document.getElementById('cmpchips'); if (!ids.length) return;
+  const pick = sid => { v.src = `assets/v3/cmp64/${sid}.mp4`; v.poster = `assets/v3/cmp64/${sid}.jpg`; v.play().catch(() => {});
+    c.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.sid === sid)) };
+  ids.forEach((sid, k) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.sid = sid;
+    b.textContent = (k + 1) + '. ' + sid.split('_').slice(0, 2).join(' '); b.onclick = () => pick(sid); c.appendChild(b) });
+  v.dataset.src = `assets/v3/cmp64/${ids[0]}.mp4`; pick(ids[0]); })();
+
+// masthead travels from the wall teaser to its place in the page (as alpguler.com/dense4d): it starts over the lower part of the wall,
+// enlarged, and moves down while the first screen scrolls away; no motion with prefers-reduced-motion
+(() => {
+  const hero = document.querySelector('.hero'), mast = document.querySelector('.mast'), cue = document.querySelector('.hero-ui a');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  if (!hero || !mast) return;
+  let g = null, raf = 0; const cl = x => Math.max(0, Math.min(1, x));
+  function render() {
+    raf = 0; if (!g) return;
+    const p = cl((scrollY - g.top) / (g.h * .8)), e = p * p * (3 - 2 * p), r = 1 - e, off = g.off * r, sc = 1 + (g.sc - 1) * r, y = g.ty + off;
+    mast.classList.toggle('in-hero', p < 1); mast.style.transform = p < 1 ? `translateY(${off}px) scale(${sc})` : 'none';
+    mast.style.setProperty('--sh', (cl((g.top + g.h - y - g.th * sc) / 80) * 1).toFixed(3));
+    hero.style.setProperty('--shade-y', `${(y - g.top + g.th * sc / 2).toFixed(1)}px`); hero.style.setProperty('--shade', r.toFixed(3));
+    if (cue) { cue.style.opacity = cl(1 - p * 4); cue.style.visibility = p < .25 ? 'visible' : 'hidden' }
+  }
+  function measure() {
+    mast.classList.remove('in-hero'); mast.style.transform = 'none'; g = null;
+    if (motion.matches) { hero.style.setProperty('--shade', '0'); if (cue) { cue.style.opacity = ''; cue.style.visibility = '' } return }
+    const t = mast.getBoundingClientRect(), o = hero.getBoundingClientRect(), top = o.top + scrollY;
+    const w = Math.max(...[...mast.children].map(c => { const q = document.createRange(); q.selectNodeContents(c); return q.getBoundingClientRect().width }));
+    const sc = Math.max(1, Math.min(1.25, (document.documentElement.clientWidth - 40) / w));
+    // the wall is letterboxed (object-fit: contain): on a tall screen start just under the picture, if the black band below has room
+    const v = (hero.querySelector('video') || hero).getBoundingClientRect(), vb = v.top - o.top + v.height / 2 + Math.min(v.height, v.width * 9 / 16) / 2;   // scaled on phones
+    const pad = mast.firstElementChild.getBoundingClientRect().top - t.top, txt = mast.lastElementChild.getBoundingClientRect().bottom - t.top - pad;
+    const start = top + (o.height - vb >= txt * sc + 48 ? vb + 12 - pad * sc
+                          : Math.max(24, Math.min(o.height * .62 - t.height * sc / 2, o.height - t.height * sc - 84)));
+    g = { top, h: o.height, ty: t.top + scrollY, th: t.height, sc, off: start - (t.top + scrollY) }; render();
+  }
+  addEventListener('scroll', () => { if (!raf && g) raf = requestAnimationFrame(render) }, { passive: true });
+  addEventListener('resize', measure); addEventListener('pageshow', measure); addEventListener('load', measure);
+  motion.addEventListener('change', measure);
+  if (document.fonts) document.fonts.ready.then(measure);
+  measure();
+})();
+</script>
+</body>
+</html>
