@@ -1,0 +1,386 @@
+[
+{
+"id": "00122_Inner_Take2_f00011_v0004",
+"take": "00122/Inner/Take2",
+"frame": "00011",
+"view": "0004"
+},
+{
+"id": "00122_Outer_Take9_f00122_v0004",
+"take": "00122/Outer/Take9",
+"frame": "00122",
+"view": "0004"
+},
+{
+"id": "00123_Inner_Take1_f00068_v0004",
+"take": "00123/Inner/Take1",
+"frame": "00068",
+"view": "0004"
+},
+{
+"id": "00123_Outer_Take8_f00151_v0004",
+"take": "00123/Outer/Take8",
+"frame": "00151",
+"view": "0004"
+},
+{
+"id": "00127_Inner_Take2_f00183_v0004",
+"take": "00127/Inner/Take2",
+"frame": "00183",
+"view": "0004"
+},
+{
+"id": "00127_Outer_Take11_f00059_v0004",
+"take": "00127/Outer/Take11",
+"frame": "00059",
+"view": "0004"
+},
+{
+"id": "00129_Inner_Take1_f00034_v0004",
+"take": "00129/Inner/Take1",
+"frame": "00034",
+"view": "0004"
+},
+{
+"id": "00129_Outer_Take7_f00155_v0004",
+"take": "00129/Outer/Take7",
+"frame": "00155",
+"view": "0004"
+},
+{
+"id": "00134_Inner_Take1_f00064_v0004",
+"take": "00134/Inner/Take1",
+"frame": "00064",
+"view": "0004"
+},
+{
+"id": "00134_Outer_Take12_f00023_v0004",
+"take": "00134/Outer/Take12",
+"frame": "00023",
+"view": "0004"
+},
+{
+"id": "00135_Inner_Take1_f00064_v0004",
+"take": "00135/Inner/Take1",
+"frame": "00064",
+"view": "0004"
+},
+{
+"id": "00135_Outer_Take19_f00082_v0004",
+"take": "00135/Outer/Take19",
+"frame": "00082",
+"view": "0004"
+},
+{
+"id": "00136_Inner_Take1_f00026_v0004",
+"take": "00136/Inner/Take1",
+"frame": "00026",
+"view": "0004"
+},
+{
+"id": "00136_Outer_Take22_f00115_v0004",
+"take": "00136/Outer/Take22",
+"frame": "00115",
+"view": "0004"
+},
+{
+"id": "00137_Inner_Take7_f00152_v0004",
+"take": "00137/Inner/Take7",
+"frame": "00152",
+"view": "0004"
+},
+{
+"id": "00137_Outer_Take12_f00158_v0004",
+"take": "00137/Outer/Take12",
+"frame": "00158",
+"view": "0004"
+},
+{
+"id": "00140_Inner_Take1_f00177_v0004",
+"take": "00140/Inner/Take1",
+"frame": "00177",
+"view": "0004"
+},
+{
+"id": "00140_Outer_Take12_f00105_v0004",
+"take": "00140/Outer/Take12",
+"frame": "00105",
+"view": "0004"
+},
+{
+"id": "00147_Inner_Take1_f00116_v0004",
+"take": "00147/Inner/Take1",
+"frame": "00116",
+"view": "0004"
+},
+{
+"id": "00147_Outer_Take13_f00135_v0004",
+"take": "00147/Outer/Take13",
+"frame": "00135",
+"view": "0004"
+},
+{
+"id": "00148_Inner_Take1_f00063_v0004",
+"take": "00148/Inner/Take1",
+"frame": "00063",
+"view": "0004"
+},
+{
+"id": "00148_Outer_Take12_f00069_v0004",
+"take": "00148/Outer/Take12",
+"frame": "00069",
+"view": "0004"
+},
+{
+"id": "00149_Inner_Take1_f00086_v0004",
+"take": "00149/Inner/Take1",
+"frame": "00086",
+"view": "0004"
+},
+{
+"id": "00149_Outer_Take14_f00093_v0004",
+"take": "00149/Outer/Take14",
+"frame": "00093",
+"view": "0004"
+},
+{
+"id": "00151_Inner_Take2_f00170_v0004",
+"take": "00151/Inner/Take2",
+"frame": "00170",
+"view": "0004"
+},
+{
+"id": "00151_Outer_Take10_f00123_v0004",
+"take": "00151/Outer/Take10",
+"frame": "00123",
+"view": "0004"
+},
+{
+"id": "00152_Inner_Take2_f00044_v0004",
+"take": "00152/Inner/Take2",
+"frame": "00044",
+"view": "0004"
+},
+{
+"id": "00152_Outer_Take10_f00089_v0004",
+"take": "00152/Outer/Take10",
+"frame": "00089",
+"view": "0004"
+},
+{
+"id": "00154_Inner_Take1_f00133_v0004",
+"take": "00154/Inner/Take1",
+"frame": "00133",
+"view": "0004"
+},
+{
+"id": "00154_Outer_Take18_f00043_v0004",
+"take": "00154/Outer/Take18",
+"frame": "00043",
+"view": "0004"
+},
+{
+"id": "00156_Inner_Take1_f00075_v0004",
+"take": "00156/Inner/Take1",
+"frame": "00075",
+"view": "0004"
+},
+{
+"id": "00156_Outer_Take12_f00070_v0004",
+"take": "00156/Outer/Take12",
+"frame": "00070",
+"view": "0004"
+},
+{
+"id": "00160_Inner_Take2_f00138_v0004",
+"take": "00160/Inner/Take2",
+"frame": "00138",
+"view": "0004"
+},
+{
+"id": "00160_Outer_Take12_f00156_v0004",
+"take": "00160/Outer/Take12",
+"frame": "00156",
+"view": "0004"
+},
+{
+"id": "00163_Inner_Take7_f00005_v0004",
+"take": "00163/Inner/Take7",
+"frame": "00005",
+"view": "0004"
+},
+{
+"id": "00163_Outer_Take12_f00072_v0004",
+"take": "00163/Outer/Take12",
+"frame": "00072",
+"view": "0004"
+},
+{
+"id": "00167_Inner_Take1_f00055_v0004",
+"take": "00167/Inner/Take1",
+"frame": "00055",
+"view": "0004"
+},
+{
+"id": "00167_Outer_Take10_f00077_v0004",
+"take": "00167/Outer/Take10",
+"frame": "00077",
+"view": "0004"
+},
+{
+"id": "00168_Inner_Take1_f00157_v0004",
+"take": "00168/Inner/Take1",
+"frame": "00157",
+"view": "0004"
+},
+{
+"id": "00168_Outer_Take9_f00151_v0004",
+"take": "00168/Outer/Take9",
+"frame": "00151",
+"view": "0004"
+},
+{
+"id": "00169_Inner_Take0_f00086_v0004",
+"take": "00169/Inner/Take0",
+"frame": "00086",
+"view": "0004"
+},
+{
+"id": "00169_Outer_Take12_f00118_v0004",
+"take": "00169/Outer/Take12",
+"frame": "00118",
+"view": "0004"
+},
+{
+"id": "00170_Inner_Take9_f00159_v0004",
+"take": "00170/Inner/Take9",
+"frame": "00159",
+"view": "0004"
+},
+{
+"id": "00170_Outer_Take15_f00062_v0004",
+"take": "00170/Outer/Take15",
+"frame": "00062",
+"view": "0004"
+},
+{
+"id": "00174_Inner_Take2_f00119_v0004",
+"take": "00174/Inner/Take2",
+"frame": "00119",
+"view": "0004"
+},
+{
+"id": "00174_Outer_Take11_f00048_v0004",
+"take": "00174/Outer/Take11",
+"frame": "00048",
+"view": "0004"
+},
+{
+"id": "00175_Inner_Take6_f00141_v0004",
+"take": "00175/Inner/Take6",
+"frame": "00141",
+"view": "0004"
+},
+{
+"id": "00175_Outer_Take18_f00063_v0004",
+"take": "00175/Outer/Take18",
+"frame": "00063",
+"view": "0004"
+},
+{
+"id": "00176_Inner_Take1_f00121_v0004",
+"take": "00176/Inner/Take1",
+"frame": "00121",
+"view": "0004"
+},
+{
+"id": "00176_Outer_Take9_f00082_v0004",
+"take": "00176/Outer/Take9",
+"frame": "00082",
+"view": "0004"
+},
+{
+"id": "00179_Inner_Take2_f00075_v0004",
+"take": "00179/Inner/Take2",
+"frame": "00075",
+"view": "0004"
+},
+{
+"id": "00179_Outer_Take12_f00086_v0004",
+"take": "00179/Outer/Take12",
+"frame": "00086",
+"view": "0004"
+},
+{
+"id": "00180_Inner_Take2_f00073_v0004",
+"take": "00180/Inner/Take2",
+"frame": "00073",
+"view": "0004"
+},
+{
+"id": "00180_Outer_Take11_f00045_v0004",
+"take": "00180/Outer/Take11",
+"frame": "00045",
+"view": "0004"
+},
+{
+"id": "00185_Inner_Take5_f00082_v0004",
+"take": "00185/Inner/Take5",
+"frame": "00082",
+"view": "0004"
+},
+{
+"id": "00185_Outer_Take17_f00130_v0004",
+"take": "00185/Outer/Take17",
+"frame": "00130",
+"view": "0004"
+},
+{
+"id": "00187_Inner_Take6_f00031_v0004",
+"take": "00187/Inner/Take6",
+"frame": "00031",
+"view": "0004"
+},
+{
+"id": "00187_Outer_Take10_f00022_v0004",
+"take": "00187/Outer/Take10",
+"frame": "00022",
+"view": "0004"
+},
+{
+"id": "00188_Inner_Take1_f00083_v0004",
+"take": "00188/Inner/Take1",
+"frame": "00083",
+"view": "0004"
+},
+{
+"id": "00188_Outer_Take10_f00061_v0004",
+"take": "00188/Outer/Take10",
+"frame": "00061",
+"view": "0004"
+},
+{
+"id": "00190_Inner_Take2_f00088_v0004",
+"take": "00190/Inner/Take2",
+"frame": "00088",
+"view": "0004"
+},
+{
+"id": "00190_Outer_Take10_f00028_v0004",
+"take": "00190/Outer/Take10",
+"frame": "00028",
+"view": "0004"
+},
+{
+"id": "00191_Inner_Take2_f00055_v0004",
+"take": "00191/Inner/Take2",
+"frame": "00055",
+"view": "0004"
+},
+{
+"id": "00191_Outer_Take12_f00149_v0004",
+"take": "00191/Outer/Take12",
+"frame": "00149",
+"view": "0004"
+}
+]

@@ -1,0 +1,13 @@
+# on top of TRELLIS.2 and its CUDA extensions (TRELLIS.2/setup.sh)
+huggingface_hub>=0.30
+safetensors>=0.4
+transformers>=4.56
+trimesh>=4.0
+opencv-python-headless
+scipy
+pillow
+numpy
+smplx
+# training only
+webdataset
+pandas

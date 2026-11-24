@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+data/
+output*/
+runs/
+results/
+two_branch_data/
+full/
+pg/
+pg50k/
+training/cache/
+*.pt
+*.safetensors
