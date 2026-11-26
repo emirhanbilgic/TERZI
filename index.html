@@ -69,6 +69,14 @@ p { margin: 0 }
 .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: var(--shade, 1);
   background: radial-gradient(ellipse 67% 35% at 50% var(--shade-y, 68%), rgba(0,0,0,.75), transparent 82%) }
 .hero-ui { z-index: 1 }
+/* links under the masthead: arXiv (no link until the paper is announced), code, weights */
+.mast .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 4px }
+.mast .pill { display: inline-flex; align-items: center; gap: 8px; font: 500 15px/1 var(--body); color: var(--ink); text-decoration: none;
+  background: var(--surface-2); border: 1px solid var(--line); padding: 10px 16px; border-radius: 999px; transition: border-color .15s, color .15s }
+.mast a.pill:hover { border-color: var(--accent); color: var(--accent) }
+.mast .pill svg { width: 17px; height: 17px; flex: none }
+.mast .pill.soon { color: var(--ink-dim); cursor: default }
+@media (max-width: 600px) { .mast .links { gap: 8px } .mast .pill { font-size: 13px; padding: 8px 11px; gap: 6px } .mast .pill svg { width: 14px; height: 14px } }
 /* phones, narrow screens: the 4D-DRESS sliders two per row (ids: these rules come before the .bagrid ones) */
 @media (max-width: 600px) { #fourdba .bagrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px }
   #fourdba .ba .knob { width: 28px; height: 28px; margin: -14px 0 0 -14px; font-size: 11px } }
@@ -189,6 +197,11 @@ footer { padding-block: 72px 48px; color: var(--ink-faint); font-size: 14px; tex
     <p class="full"><u>T</u>hree-dimensional Garment G<u>e</u>neration and <u>R</u>etargeting via Optimi<u>z</u>ation-free <u>I</u>nference</p>
     <p class="authors">Emirhan Bilgi&ccedil;, R&#305;za Alp G&uuml;ler</p>
     <p class="affil">Imperial College London</p>
+    <nav class="links" aria-label="Paper, code and weights">
+      <span class="pill soon" title="arXiv link coming soon"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1h5.5L13 4.5V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9 1v4h4M5.5 8.5h5M5.5 11h5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>arXiv</span>
+      <a class="pill" href="https://github.com/emirhanbilgic/TERZI" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Code</a>
+      <a class="pill" href="https://huggingface.co/emirhanbilgic/TERZI" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#ffd21e"/><circle cx="5.6" cy="6.6" r="1" fill="#3a3b45"/><circle cx="10.4" cy="6.6" r="1" fill="#3a3b45"/><path d="M4.9 9.3c.7 1.5 1.8 2.2 3.1 2.2s2.4-.7 3.1-2.2" fill="none" stroke="#3a3b45" stroke-width="1.2" stroke-linecap="round"/></svg>Hugging Face</a>
+    </nav>
   </header>
 
   <section class="block wide" aria-label="Overview figure">
@@ -437,7 +450,7 @@ document.querySelectorAll('[data-tabs]').forEach(g => {
     // the wall is letterboxed (object-fit: contain): on a tall screen start just under the picture, if the black band below has room
     const v = (hero.querySelector('video') || hero).getBoundingClientRect(), vb = v.top - o.top + v.height / 2 + Math.min(v.height, v.width * 9 / 16) / 2;   // scaled on phones
     const pad = mast.firstElementChild.getBoundingClientRect().top - t.top, txt = mast.lastElementChild.getBoundingClientRect().bottom - t.top - pad;
-    const start = top + (o.height - vb >= txt * sc + 48 ? vb + 12 - pad * sc
+    const start = top + (o.height - vb >= txt * sc + 88 ? vb + 12 - pad * sc
                           : Math.max(24, Math.min(o.height * .62 - t.height * sc / 2, o.height - t.height * sc - 84)));
     g = { top, h: o.height, ty: t.top + scrollY, th: t.height, sc, off: start - (t.top + scrollY) }; render();
   }
