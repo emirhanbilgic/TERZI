@@ -342,7 +342,7 @@ document.querySelectorAll('[data-tabs]').forEach(g => {
     b.innerHTML = `<img src="assets/v3/wild/${id}.jpg" alt="" loading="lazy">`; b.onclick = () => pick(id); t.appendChild(b) });
   pick(ids[0]); })();
 
-// results: the paper's tables (4D-DRESS = Tab. 2; CloSe = supp. Tab. 13; BEDLAM2.0 validation = supp. Tab. 14, as pasted by the user 2026-11-21)
+// results: the paper's tables (4D-DRESS = Tab. 2; CloSe = supp. Tab. 13)
 (() => { const D = String.fromCharCode(8224), B = {
   '4D-DRESS': { lede: '64 frames; ours on the GVHMR body. Segmentation: garments evaluated after segmenting each prediction. GT label transfer: garment labels transferred from the ground-truth scan. Chamfer distance (CD) in cm.',
     cap: '* after segmentation &middot; &dagger; closed source, numbers from the paper &middot; bold = best, underlined = second best',
@@ -355,13 +355,7 @@ document.querySelectorAll('[data-tabs]').forEach(g => {
     rows: [['ReMu' + D, [1.717, .831, .406, 1.554, .837, .425]], ['TRELLIS.2*', [1.270, .818, .526, 1.223, .819, .535]],
       ['HumanNOVA*', [1.303, .837, .534, 1.220, .839, .541]], ['SiTH*', [1.618, .834, .402, 1.567, .835, .410]], ['ISP' + D, [1.908, .832, .375, 1.721, .826, .390]],
       ['ChatGarment', [2.170, .811, .336, 1.855, .817, .367]],
-      ['TERZI (ours)', [1.202, .837, .534, 1.148, .843, .553]], ['TERZI (ours, masked)', [1.228, .834, .523, 1.167, .840, .544]]] },
-  'BEDLAM2.0 validation': { lede: '200 frames of the validation split; ours on the PromptHMR body. Protocols as for 4D-DRESS. Chamfer distance (CD) in cm.',
-    cap: '* after segmentation &middot; &dagger; failed on some frames and averaged over the rest: ReMu on 4 frames (196 evaluated), ChatGarment on 1 (199 evaluated) &middot; bold = best, underlined = second best',
-    rows: [['ReMu' + D, [2.781, .772, .310, 2.297, .783, .342]], ['TRELLIS.2*', [2.110, .807, .375, 1.993, .802, .390]],
-      ['HumanNOVA*', [2.514, .794, .320, 2.333, .785, .336]], ['SiTH*', [2.778, .791, .260, 2.498, .790, .284]], ['ISP', [2.841, .813, .286, 2.485, .806, .317]],
-      ['ChatGarment' + D, [3.030, .812, .298, 2.172, .819, .345]],
-      ['TERZI (ours)', [1.096, .860, .603, 1.089, .862, .615]], ['TERZI (ours, masked)', [1.114, .857, .596, 1.103, .859, .611]]] } };
+      ['TERZI (ours)', [1.202, .837, .534, 1.148, .843, .553]], ['TERZI (ours, masked)', [1.228, .834, .523, 1.167, .840, .544]]] } };
   const c = document.getElementById('bchips'), fmt = (v, q) => v === null ? '<span class="dim">&ndash;</span>' : q % 3 ? v.toFixed(3).slice(1) : v.toFixed(3);
   const show = k => { const T = B[k].rows, first = T.findIndex(r => r[0].startsWith('TERZI'));
     const rank = [0, 1, 2, 3, 4, 5].map(q => { const v = T.map((r, i) => [r[1][q], i]).filter(x => x[0] !== null).sort((a, b) => q % 3 ? b[0] - a[0] : a[0] - b[0]);
